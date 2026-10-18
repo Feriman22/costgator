@@ -1,0 +1,47 @@
+# Minimum supported versions: WordPress 6.5, PHP 7.4, WooCommerce 8.0.
+# Usage: docker compose -f dev/compat/docker-compose.yml -p costgator-compat up -d
+services:
+  db:
+    image: mariadb:10.6
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: compat
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:php7.4-apache # core is replaced with 6.5 by wp-cli
+    depends_on: [db]
+    ports:
+      - "127.0.0.1:8089:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: compat
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+    volumes:
+      - wp:/var/www/html
+      - ../../costgator:/var/www/html/wp-content/plugins/costgator:ro
+
+  cli:
+    image: wordpress:cli-php7.4
+    user: "33:33"
+    depends_on: [db, wordpress]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: compat
+      WORDPRESS_DB_NAME: wordpress
+      HOME: /tmp
+    volumes:
+      - wp:/var/www/html
+      - ../../costgator:/var/www/html/wp-content/plugins/costgator:ro
+      - ..:/dev-scripts
+    profiles: [cli]
+
+volumes:
+  db:
+  wp:

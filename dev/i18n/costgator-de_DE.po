@@ -1,0 +1,219 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CostGator Margin Audit for WooCommerce 0.1.0\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: costgator\n"
+
+msgid "CostGator Margin Audit for WooCommerce"
+msgstr "CostGator Margin Audit für WooCommerce"
+
+msgid "Find WooCommerce products, sales and coupons that sell below cost or below your margin. Test a discount before you launch it."
+msgstr "Findet WooCommerce-Produkte, Aktionen und Gutscheine, die unter Einkaufspreis oder unter deiner Marge verkaufen. Teste einen Rabatt, bevor du ihn startest."
+
+msgid "Scan store"
+msgstr "Shop prüfen"
+
+msgid "Scanning %1$s of %2$s products..."
+msgstr "Prüfe %1$s von %2$s Produkten..."
+
+msgid "Starting scan..."
+msgstr "Prüfung wird gestartet..."
+
+msgid "Scan complete. Loading results..."
+msgstr "Prüfung abgeschlossen. Ergebnisse werden geladen..."
+
+msgid "The scan failed. Please try again."
+msgstr "Die Prüfung ist fehlgeschlagen. Bitte versuche es erneut."
+
+msgid "You are not allowed to do this."
+msgstr "Du bist dazu nicht berechtigt."
+
+msgid "WooCommerce COGS"
+msgstr "WooCommerce-Wareneinsatz"
+
+msgid "This scan was replaced by a newer one."
+msgstr "Diese Prüfung wurde durch eine neuere ersetzt."
+
+msgid "Could not save scan results."
+msgstr "Die Prüfergebnisse konnten nicht gespeichert werden."
+
+msgid "Finds prices, sales and coupons that can make you sell below cost."
+msgstr "Findet Preise, Aktionen und Gutscheine, durch die du unter Einkaufspreis verkaufen kannst."
+
+msgid "Settings saved. Run a new scan to apply them."
+msgstr "Einstellungen gespeichert. Starte eine neue Prüfung, um sie anzuwenden."
+
+msgid "WooCommerce Cost of Goods Sold is not enabled. Enable it under %s and enter product costs, or use a supported cost plugin."
+msgstr "Der WooCommerce-Wareneinsatz (Cost of Goods Sold) ist nicht aktiviert. Aktiviere ihn unter %s und trage die Produktkosten ein, oder nutze ein unterstütztes Kosten-Plugin."
+
+msgid "WooCommerce > Settings > Advanced > Features"
+msgstr "WooCommerce > Einstellungen > Erweitert > Funktionen"
+
+msgid "Scan My Store"
+msgstr "Shop jetzt prüfen"
+
+msgid "Read-only audit. No prices, products, orders or coupons are modified."
+msgstr "Nur lesende Prüfung. Es werden keine Preise, Produkte, Bestellungen oder Gutscheine verändert."
+
+msgid "No scan yet. Click Scan My Store to check your catalog."
+msgstr "Noch keine Prüfung. Klicke auf Shop jetzt prüfen, um deinen Katalog zu prüfen."
+
+msgid "Products checked"
+msgstr "Geprüfte Produkte"
+
+msgid "Below cost"
+msgstr "Unter Einkaufspreis"
+
+msgid "Total at risk"
+msgstr "Gefährdet gesamt"
+
+msgid "Missing cost"
+msgstr "Fehlende Kosten"
+
+msgid "Risky coupons"
+msgstr "Riskante Gutscheine"
+
+msgid "Last scan: %1$s. Low margin threshold: %2$s."
+msgstr "Letzte Prüfung: %1$s. Schwelle für niedrige Marge: %2$s."
+
+msgid "Prices include tax in this store. They are converted to net using your store base tax rates before comparison."
+msgstr "Die Preise in diesem Shop enthalten Steuern. Sie werden vor dem Vergleich mit den Steuersätzen deines Shop-Standorts in Nettopreise umgerechnet."
+
+msgid "Prices are entered without tax in this store and are compared as entered."
+msgstr "Die Preise in diesem Shop werden ohne Steuern eingegeben und unverändert verglichen."
+
+msgid "Costs are assumed to be net of tax, in %s. Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included."
+msgstr "Kosten werden als Nettowerte in %s angenommen. Verglichen werden nur Produktpreis und Kosten. Versand, Zahlungsgebühren, Marketing und andere Kosten sind nicht enthalten."
+
+msgid "Selling below cost"
+msgstr "Verkauf unter Einkaufspreis"
+
+msgid "The current price is lower than the cost. Every sale loses money on the product itself."
+msgstr "Der aktuelle Preis liegt unter den Kosten. Jeder Verkauf macht schon beim Produkt selbst Verlust."
+
+msgid "Scheduled sales at risk"
+msgstr "Geplante Aktionen mit Risiko"
+
+msgid "A sale that has not started yet will push the price below cost or below your margin threshold."
+msgstr "Eine noch nicht gestartete Aktion drückt den Preis unter die Kosten oder unter deine Margenschwelle."
+
+msgid "Low margin"
+msgstr "Niedrige Marge"
+
+msgid "The current price is above cost, but the margin is below your threshold. Review before running more promotions."
+msgstr "Der aktuelle Preis liegt über den Kosten, aber die Marge ist unter deiner Schwelle. Prüfe ihn vor weiteren Aktionen."
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Net price"
+msgstr "Nettopreis"
+
+msgid "Cost"
+msgstr "Kosten"
+
+msgid "Margin"
+msgstr "Marge"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Loss: %s per unit"
+msgstr "Verlust: %s pro Stück"
+
+msgid "On sale"
+msgstr "Im Angebot"
+
+msgid "Sale starts %s"
+msgstr "Aktion beginnt am %s"
+
+msgid "Cost from %s"
+msgstr "Kosten aus %s"
+
+msgid "Not shown: %s more."
+msgstr "Nicht angezeigt: %s weitere."
+
+msgid "Coupons that could cause losses"
+msgstr "Gutscheine, die Verluste verursachen können"
+
+msgid "Potential risk: applied to the current price of eligible products, this coupon would leave them below cost or below your threshold. Spend limits, customer restrictions and coupon combinations are not evaluated."
+msgstr "Mögliches Risiko: Auf den aktuellen Preis berechtigter Produkte angewendet, würde dieser Gutschein sie unter die Kosten oder unter deine Schwelle bringen. Mindestbestellwerte, Kundenbeschränkungen und Gutscheinkombinationen werden nicht geprüft."
+
+msgid "Coupon"
+msgstr "Gutschein"
+
+msgid "Discount"
+msgstr "Rabatt"
+
+msgid "Examples"
+msgstr "Beispiele"
+
+msgid "Missing cost information"
+msgstr "Fehlende Kosteninformationen"
+
+msgid "These products have no usable cost, so their profitability cannot be checked. WooCommerce stores a zero cost as empty, so products with a cost of 0 also appear here."
+msgstr "Diese Produkte haben keine verwendbaren Kosten, daher kann ihre Rentabilität nicht geprüft werden. WooCommerce speichert Kosten von 0 als leer, deshalb erscheinen auch Produkte mit Kosten von 0 hier."
+
+msgid "No issues found"
+msgstr "Keine Probleme gefunden"
+
+msgid "Every checked product has a cost and sells above your margin threshold."
+msgstr "Jedes geprüfte Produkt hat Kosten und verkauft über deiner Margenschwelle."
+
+msgid "Fixed amount coupons not analyzed: %s. This version checks percentage coupons only."
+msgstr "Nicht analysierte Gutscheine mit festem Betrag: %s. Diese Version prüft nur prozentuale Gutscheine."
+
+msgid "Promotion Preflight"
+msgstr "Aktions-Vorabprüfung"
+
+msgid "Planning a store-wide sale? See which products would drop below cost or below your threshold before you launch it. Uses the data of the last scan."
+msgstr "Planst du eine shopweite Aktion? Sieh vor dem Start, welche Produkte unter die Kosten oder unter deine Schwelle fallen würden. Verwendet die Daten der letzten Prüfung."
+
+msgid "applied to"
+msgstr "angewendet auf"
+
+msgid "current price (on top of running sales)"
+msgstr "aktuellen Preis (zusätzlich zu laufenden Aktionen)"
+
+msgid "regular price (replacing running sales)"
+msgstr "regulären Preis (ersetzt laufende Aktionen)"
+
+msgid "Check promotion"
+msgstr "Aktion prüfen"
+
+msgid "With %1$s off: %2$s below cost, %3$s below threshold, out of %4$s products with a known cost."
+msgstr "Mit %1$s Rabatt: %2$s unter Einkaufspreis, %3$s unter der Schwelle, von %4$s Produkten mit bekannten Kosten."
+
+msgid "Skipped without cost: %s."
+msgstr "Ohne Kosten übersprungen: %s."
+
+msgid "Promo net price"
+msgstr "Aktions-Nettopreis"
+
+msgid "Coming soon"
+msgstr "Demnächst"
+
+msgid "Automated scheduled audits with email alerts"
+msgstr "Automatische, geplante Prüfungen mit E-Mail-Benachrichtigung"
+
+msgid "Coupon combination analysis"
+msgstr "Analyse von Gutscheinkombinationen"
+
+msgid "Per-category margin rules and CSV export"
+msgstr "Margenregeln pro Kategorie und CSV-Export"
+
+msgid "Get notified when Pro launches"
+msgstr "Benachrichtige mich zum Start von Pro"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Low margin threshold"
+msgstr "Schwelle für niedrige Marge"
+
+msgid "Save"
+msgstr "Speichern"

@@ -1,0 +1,7 @@
+.env
+/vendor/
+/costgator/vendor/
+*.zip
+/dev/phpunit.phar
+*.phpunit.result.cache
+/dist/
