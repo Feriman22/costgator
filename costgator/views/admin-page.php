@@ -72,7 +72,7 @@ $costgator_features_url = admin_url( 'admin.php?page=wc-settings&tab=advanced&se
 		$costgator_cards      = array(
 			array( __( 'Products checked', 'costgator' ), count( $scan['items'] ), '' ),
 			array( __( 'Below cost', 'costgator' ), count( $costgator_below ), count( $costgator_below ) ? 'is-critical' : '' ),
-			array( __( 'Total at risk', 'costgator' ), $costgator_at_risk, $costgator_at_risk ? 'is-warning' : '' ),
+			array( __( 'Products at risk', 'costgator' ), $costgator_at_risk, $costgator_at_risk ? 'is-warning' : '' ),
 			array( __( 'Missing cost', 'costgator' ), count( $costgator_missing ), count( $costgator_missing ) ? 'is-warning' : '' ),
 			array( __( 'Risky coupons', 'costgator' ), count( $costgator_coupons ), count( $costgator_coupons ) ? 'is-warning' : '' ),
 		);

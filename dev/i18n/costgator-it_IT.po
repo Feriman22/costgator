@@ -68,8 +68,8 @@ msgstr "Prodotti controllati"
 msgid "Below cost"
 msgstr "Sotto costo"
 
-msgid "Total at risk"
-msgstr "Totale a rischio"
+msgid "Products at risk"
+msgstr "Prodotti a rischio"
 
 msgid "Missing cost"
 msgstr "Costo mancante"
