@@ -40,10 +40,10 @@ async function shoot(page, file, first, last) {
   await sections.nth(mi).evaluate(e => e.id = 'shot-missing');
   await sections.nth(2).evaluate(e => e.id = 'shot-low');
   await shoot(page, 'screenshot-1.png', '.costgator-wrap h1', '#shot-low');
-  await shoot(page, 'screenshot-2.png', '#shot-coupons', '#shot-missing');
+  await shoot(page, 'screenshot-3.png', '#shot-coupons', '#shot-missing');
   await page.goto(base + '/wp-admin/admin.php?page=costgator&preflight=25&basis=regular');
   await page.waitForLoadState('networkidle');
-  await shoot(page, 'screenshot-3.png', '#costgator-preflight', '#costgator-preflight');
+  await shoot(page, 'screenshot-2.png', '#costgator-preflight', '#costgator-preflight');
   console.log('js errors:', JSON.stringify(errors));
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });

@@ -4,7 +4,7 @@ Tags: woocommerce, profit, margin, cost of goods, coupons
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,17 +69,25 @@ The scan runs in small batches from your browser, which keeps each request short
 
 Published simple products and the enabled variations of published variable products. Drafts, private products, disabled variations, external and grouped products are skipped.
 
+= Is there a Pro version? =
+
+CostGator Pro is planned, with scheduled audits and email alerts, coupon combination analysis, and per-category margin rules with CSV export. The price and release date are not set yet. You can join the waitlist at [getcostgator.com](https://getcostgator.com/). The free plugin stays free.
+
 == Screenshots ==
 
 1. Scan results: products selling below cost, scheduled sales at risk and low margin products.
-2. Risky coupons and products with missing cost information.
-3. Promotion Preflight: see which products a planned discount would push below cost or below your margin threshold.
+2. Promotion Preflight: see which products a planned discount would push below cost or below your margin threshold.
+3. Risky coupons and products with missing cost information.
 
 == Support ==
 
 Ask questions and report problems in the [support forum](https://wordpress.org/support/plugin/costgator/). Please include your WooCommerce version and where your product costs come from.
 
 == Changelog ==
+
+= 1.0.1 =
+* The summary card now reads "Products at risk" instead of "Total at risk".
+* Added a link to the CostGator Pro waitlist on the plugin page.
 
 = 1.0.0 =
 * First stable release. No functional changes since 0.1.0.
@@ -88,6 +96,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Small label fix and a link to the Pro waitlist.
 
 = 1.0.0 =
 First stable release.

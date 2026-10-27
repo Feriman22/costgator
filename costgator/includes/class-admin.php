@@ -24,7 +24,7 @@ final class Admin {
 	/**
 	 * Landing page of the upcoming Pro version. The waitlist box stays hidden while this is empty.
 	 */
-	const PRO_WAITLIST_URL = '';
+	const PRO_WAITLIST_URL = 'https://getcostgator.com/';
 
 	/**
 	 * Hook registration.
