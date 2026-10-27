@@ -8,21 +8,23 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Find WooCommerce products, sales and coupons that sell below cost or below your margin. Test a discount before you launch it.
+Test a store-wide discount before you launch it. Find WooCommerce products, sales and percentage coupons that could sell below cost or your margin.
 
 == Description ==
 
-CostGator scans your WooCommerce catalog and shows where a price, a sale or a coupon can make you lose money on the product itself.
+Planning a store-wide sale? Run a scan, then enter the discount in Promotion Preflight. You see which products with a known cost would drop below cost or below your minimum margin, before the first order comes in.
+
+CostGator also checks your published products and variations, and shows where a current price, a scheduled sale or a percentage coupon would put a product below cost or below your minimum margin.
 
 Click **Scan My Store** under WooCommerce > CostGator and get a clear list of:
 
 * **Products selling below cost.** The current price, including running sales, is lower than the unit cost.
 * **Scheduled sales at risk.** A sale that has not started yet would push the price below cost or below your margin threshold.
-* **Low margin products.** Above cost, but below the minimum margin you set (10% by default).
+* **Low margin products.** Not below cost, but below the minimum margin you set (10% by default).
 * **Risky percentage coupons.** Coupons that would leave eligible products below cost or below your threshold. Product, category and sale item restrictions are respected.
 * **Missing cost information.** Products whose profitability cannot be checked.
 
-**Promotion Preflight.** Planning a 25% store-wide sale? Enter the discount and see which products would drop below cost before you launch it.
+**Promotion Preflight.** Enter a percentage discount and choose whether it replaces running sales or stacks on top of them. It uses the data of the last scan and skips products without a known cost.
 
 = Read-only and private =
 
@@ -75,8 +77,8 @@ CostGator Pro is planned, with scheduled audits and email alerts, coupon combina
 
 == Screenshots ==
 
-1. Scan results: products selling below cost, scheduled sales at risk and low margin products.
-2. Promotion Preflight: see which products a planned discount would push below cost or below your margin threshold.
+1. Promotion Preflight: see which products a planned discount would push below cost or below your margin threshold.
+2. Scan results: products selling below cost, scheduled sales at risk and low margin products.
 3. Risky coupons and products with missing cost information.
 
 == Support ==
