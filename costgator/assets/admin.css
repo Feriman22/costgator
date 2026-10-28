@@ -33,6 +33,10 @@
 .costgator-inline-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .costgator-preflight-summary { font-size: 14px; }
 
+
+.costgator-review { background: #fff; border: 1px solid #c3c4c7; border-left: 4px solid #2271b1; padding: 4px 16px; margin: 16px 0; }
+.costgator-review[hidden] { display: none; }
+.costgator-review .button { margin-right: 8px; }
 .costgator-pro { background: #f0f6fc; border: 1px solid #c5d9ed; border-radius: 4px; padding: 4px 16px 16px; margin: 16px 0; }
 .costgator-pro-badge { display: inline-block; margin-top: 12px; padding: 2px 8px; border-radius: 3px; background: #2271b1; color: #fff; font-size: 11px; font-weight: 600; text-transform: uppercase; }
 .costgator-pro ul { list-style: disc; margin-left: 20px; }

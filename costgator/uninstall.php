@@ -14,6 +14,7 @@ function costgator_delete_site_data() {
 	delete_option( 'costgator_settings' );
 	delete_option( 'costgator_last_scan' );
 	delete_option( 'costgator_scan_running' );
+	delete_option( 'costgator_review_dismissed' );
 
 	delete_option( 'costgator_scan_ids' );
 

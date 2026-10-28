@@ -1,5 +1,5 @@
 """HTTP smoke test against the local site: login, admin page, AJAX scan, permissions, settings."""
-import http.cookiejar, json, os, re, sys, urllib.parse, urllib.request
+import html, http.cookiejar, json, os, re, sys, urllib.error, urllib.parse, urllib.request
 
 env = dict(l.strip().split("=", 1) for l in open(os.path.join(os.path.dirname(__file__), "..", ".env")) if "=" in l)
 BASE = "http://" + env.get("WP_BIND", "127.0.0.1") + ":8088"
@@ -54,6 +54,21 @@ page = get(admin, "/wp-admin/admin.php?page=costgator")
 check("results shown", "Selling below cost" in page and "CG-TAXTRAP" in page and "save30" in page)
 check("missing cost listed", "CG-NOCOST" in page)
 check("no PHP notices", not re.search(r"(Warning|Notice|Deprecated|Fatal error)</b>:", page))
+
+check("review request shown after a scan with costs", "Leave a review" in page and "Don&#039;t ask again" in page)
+review_url = html.unescape(re.search(r'href="([^"]*choice=review[^"]*)"', page).group(1))
+dismiss_url = html.unescape(re.search(r'href="([^"]*choice=dismiss[^"]*)"', page).group(1))
+check("review button opens the WordPress.org review form", review_url.startswith(BASE + "/wp-admin/admin-post.php?") and "_wpnonce=" in review_url)
+code, _ = post(admin, "/wp-admin/admin-post.php?action=costgator_review&choice=dismiss&_wpnonce=bad", {})
+check("review dismiss with bad nonce rejected", code == 403)
+customer_early = session("shopper", "shopperpass123")
+try:
+    code = customer_early.open(dismiss_url).status
+except urllib.error.HTTPError as e:
+    code = e.code
+check("customer cannot dismiss the review request", code == 403)
+page = admin.open(dismiss_url).read().decode()
+check("review request gone for good after dismiss", "costgator-scan" in page and "Leave a review" not in page)
 
 page = get(admin, "/wp-admin/admin.php?page=costgator&preflight=20&basis=current")
 check("preflight renders", "With 20" in page and "below cost" in page)

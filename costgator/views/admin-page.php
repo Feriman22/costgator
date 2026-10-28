@@ -77,6 +77,25 @@ $costgator_features_url = admin_url( 'admin.php?page=wc-settings&tab=advanced&se
 			array( __( 'Risky coupons', 'costgator' ), count( $costgator_coupons ), count( $costgator_coupons ) ? 'is-warning' : '' ),
 		);
 		?>
+		<?php $costgator_review_count = Admin::review_request_count( $scan ); ?>
+		<?php if ( $costgator_review_count ) : ?>
+			<div class="costgator-review" id="costgator-review">
+				<p>
+					<?php
+					printf(
+						/* translators: %s: number of products with a known cost */
+						esc_html( _n( 'CostGator checked %s product with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it.', 'CostGator checked %s products with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it.', $costgator_review_count, 'costgator' ) ),
+						esc_html( number_format_i18n( $costgator_review_count ) )
+					);
+					?>
+				</p>
+				<p>
+					<a class="button button-primary" href="<?php echo esc_url( Admin::review_action_url( 'review' ) ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Leave a review', 'costgator' ); ?></a>
+					<a class="button" href="<?php echo esc_url( Admin::review_action_url( 'dismiss' ) ); ?>"><?php esc_html_e( "Don't ask again", 'costgator' ); ?></a>
+				</p>
+			</div>
+		<?php endif; ?>
+
 		<p class="costgator-meta">
 			<?php
 			printf(
@@ -339,6 +358,14 @@ $costgator_features_url = admin_url( 'admin.php?page=wc-settings&tab=advanced&se
 							<?php endforeach; ?>
 						</tbody>
 					</table>
+					<?php if ( count( $costgator_pf_rows ) > Admin::ROW_LIMIT ) : ?>
+						<p class="description">
+							<?php
+							/* translators: %s: number of rows not shown */
+							printf( esc_html__( 'Not shown: %s more.', 'costgator' ), esc_html( number_format_i18n( count( $costgator_pf_rows ) - Admin::ROW_LIMIT ) ) );
+							?>
+						</p>
+					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif; ?>
 		</div>

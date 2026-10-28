@@ -4,7 +4,7 @@ Tags: woocommerce, profit, margin, cost of goods, coupons
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,10 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 
 == Changelog ==
 
+= 1.0.2 =
+* Promotion Preflight now says how many rows are not shown when more than 100 products are affected.
+* Added a one-time review request on the CostGator screen. It appears after a scan with known costs and goes away for good with either button.
+
 = 1.0.1 =
 * The summary card now reads "Products at risk" instead of "Total at risk".
 * Added a link to the CostGator Pro waitlist on the plugin page.
@@ -98,6 +102,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Preflight shows how many rows are hidden, and a one-time review request.
 
 = 1.0.1 =
 Small label fix and a link to the Pro waitlist.

@@ -1,6 +1,14 @@
 ( function () {
 	'use strict';
 
+	// The review form opens in a new tab and the request is already dismissed, so hide it here too.
+	var review = document.getElementById( 'costgator-review' );
+	if ( review ) {
+		review.querySelector( 'a[target]' ).addEventListener( 'click', function () {
+			review.hidden = true;
+		} );
+	}
+
 	var config = window.costGator;
 	var button = document.getElementById( 'costgator-scan' );
 	if ( ! config || ! button ) {

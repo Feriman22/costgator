@@ -17,6 +17,7 @@ update_option( 'woocommerce_tax_based_on', 'base' );
 update_option( 'woocommerce_tax_classes', "Reduced rate\nZero rate" );
 delete_option( 'costgator_last_scan' );
 delete_option( 'costgator_settings' );
+delete_option( 'costgator_review_dismissed' );
 
 global $wpdb;
 $wpdb->query( "DELETE FROM {$wpdb->prefix}woocommerce_tax_rates" );

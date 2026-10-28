@@ -19,7 +19,10 @@ final class Admin {
 	const OPTION_SETTINGS = 'costgator_settings';
 	const NONCE_SCAN      = 'costgator_scan';
 	const NONCE_SETTINGS  = 'costgator_settings';
+	const NONCE_REVIEW    = 'costgator_review';
+	const OPTION_REVIEW   = 'costgator_review_dismissed';
 	const ROW_LIMIT       = 100;
+	const REVIEW_URL      = 'https://wordpress.org/support/plugin/costgator/reviews/#new-post';
 
 	/**
 	 * Landing page of the upcoming Pro version. The waitlist box stays hidden while this is empty.
@@ -35,6 +38,7 @@ final class Admin {
 		add_action( 'wp_ajax_costgator_start', array( __CLASS__, 'ajax_start' ) );
 		add_action( 'wp_ajax_costgator_step', array( __CLASS__, 'ajax_step' ) );
 		add_action( 'admin_post_costgator_settings', array( __CLASS__, 'save_settings' ) );
+		add_action( 'admin_post_costgator_review', array( __CLASS__, 'dismiss_review' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( COSTGATOR_FILE ), array( __CLASS__, 'action_links' ) );
 	}
 
@@ -150,6 +154,67 @@ final class Admin {
 		update_option( self::OPTION_SETTINGS, array( 'threshold' => $threshold ), false );
 
 		wp_safe_redirect( add_query_arg( 'settings-updated', '1', self::page_url() ) );
+		exit;
+	}
+
+	/**
+	 * Number of scanned items with a known cost, or 0 when the review request was dismissed.
+	 *
+	 * The review request is shown once the plugin was useful, and never again after either button was used.
+	 *
+	 * @param array|null $scan Last completed scan.
+	 * @return int
+	 */
+	public static function review_request_count( $scan ): int {
+		if ( null === $scan || get_option( self::OPTION_REVIEW ) ) {
+			return 0;
+		}
+		return count(
+			array_filter(
+				$scan['items'],
+				static function ( $item ) {
+					return null !== $item['cost'] && $item['cost'] > 0;
+				}
+			)
+		);
+	}
+
+	/**
+	 * URL of a review request button.
+	 *
+	 * @param string $choice 'review' or 'dismiss'.
+	 * @return string
+	 */
+	public static function review_action_url( string $choice ): string {
+		return wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => 'costgator_review',
+					'choice' => $choice,
+				),
+				admin_url( 'admin-post.php' )
+			),
+			self::NONCE_REVIEW
+		);
+	}
+
+	/**
+	 * Hide the review request for good, then open the review form or return to the plugin screen.
+	 */
+	public static function dismiss_review() {
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'costgator' ), 403 );
+		}
+		check_admin_referer( self::NONCE_REVIEW );
+
+		update_option( self::OPTION_REVIEW, 1, false );
+
+		if ( isset( $_GET['choice'] ) && 'review' === sanitize_key( wp_unslash( $_GET['choice'] ) ) ) {
+			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- fixed WordPress.org URL.
+			wp_redirect( self::REVIEW_URL );
+			exit;
+		}
+		wp_safe_redirect( self::page_url() );
 		exit;
 	}
 
