@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CostGator Margin Audit for WooCommerce 1.0.2\n"
+"Project-Id-Version: CostGator Margin Audit for WooCommerce 1.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/costgator\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T19:49:14+00:00\n"
+"POT-Creation-Date: 2026-11-03T09:50:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: costgator\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: includes/class-admin.php:61
 #: includes/class-admin.php:62
-#: views/admin-page.php:27
+#: views/admin-page.php:38
 msgid "CostGator"
 msgstr ""
 
@@ -78,302 +78,333 @@ msgstr ""
 msgid "Could not save scan results."
 msgstr ""
 
-#: views/admin-page.php:28
+#. translators: 1: loss amount per unit, 2: product name
+#: views/admin-page.php:31
+#, php-format
+msgid "Largest loss: %1$s per unit, %2$s"
+msgstr ""
+
+#: views/admin-page.php:39
 msgid "Finds prices, sales and coupons that can make you sell below cost."
 msgstr ""
 
-#: views/admin-page.php:31
+#: views/admin-page.php:42
 msgid "Settings saved. Run a new scan to apply them."
 msgstr ""
 
 #. translators: %s: link to the WooCommerce features settings
-#: views/admin-page.php:40
+#: views/admin-page.php:51
 #, php-format
 msgid "WooCommerce Cost of Goods Sold is not enabled. Enable it under %s and enter product costs, or use a supported cost plugin."
 msgstr ""
 
-#: views/admin-page.php:41
+#: views/admin-page.php:52
 msgid "WooCommerce > Settings > Advanced > Features"
 msgstr ""
 
-#: views/admin-page.php:49
+#: views/admin-page.php:60
 msgid "Scan My Store"
 msgstr ""
 
-#: views/admin-page.php:56
+#: views/admin-page.php:67
 msgid "Read-only audit. No prices, products, orders or coupons are modified."
 msgstr ""
 
-#: views/admin-page.php:62
+#: views/admin-page.php:73
 msgid "No scan yet. Click Scan My Store to check your catalog."
 msgstr ""
 
-#: views/admin-page.php:73
-msgid "Products checked"
-msgstr ""
-
-#: views/admin-page.php:74
-#: views/admin-page.php:194
-#: views/admin-page.php:225
-msgid "Below cost"
-msgstr ""
-
-#: views/admin-page.php:75
-msgid "Products at risk"
-msgstr ""
-
-#: views/admin-page.php:76
-msgid "Missing cost"
-msgstr ""
-
-#: views/admin-page.php:77
-msgid "Risky coupons"
-msgstr ""
-
 #. translators: %s: number of products with a known cost
-#: views/admin-page.php:87
+#: views/admin-page.php:102
 #, php-format
 msgid "CostGator checked %s product with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it."
 msgid_plural "CostGator checked %s products with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it."
 msgstr[0] ""
 msgstr[1] ""
 
-#: views/admin-page.php:93
+#: views/admin-page.php:108
 msgid "Leave a review"
 msgstr ""
 
-#: views/admin-page.php:94
+#: views/admin-page.php:109
 msgid "Don't ask again"
 msgstr ""
 
 #. translators: 1: date and time of the scan, 2: margin threshold
-#: views/admin-page.php:103
+#: views/admin-page.php:118
 #, php-format
 msgid "Last scan: %1$s. Low margin threshold: %2$s."
 msgstr ""
 
-#: views/admin-page.php:122
-msgid "Prices include tax in this store. They are converted to net using your store base tax rates before comparison."
+#: views/admin-page.php:132
+msgid "Settings"
 msgstr ""
 
-#: views/admin-page.php:124
-msgid "Prices are entered without tax in this store and are compared as entered."
+#: views/admin-page.php:137
+msgid "Low margin threshold"
 msgstr ""
 
-#. translators: %s: currency code
-#: views/admin-page.php:129
-#, php-format
-msgid "Costs are assumed to be net of tax, in %s. Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included."
+#: views/admin-page.php:140
+msgid "Save"
 msgstr ""
 
-#: views/admin-page.php:138
-msgid "Selling below cost"
+#: views/admin-page.php:146
+msgid "Coming soon"
 msgstr ""
 
-#: views/admin-page.php:139
-msgid "The current price is lower than the cost. Every sale loses money on the product itself."
+#: views/admin-page.php:147
+msgid "CostGator Pro"
 msgstr ""
 
-#: views/admin-page.php:144
-msgid "Scheduled sales at risk"
-msgstr ""
-
-#: views/admin-page.php:145
-msgid "A sale that has not started yet will push the price below cost or below your margin threshold."
+#: views/admin-page.php:149
+msgid "Automated scheduled audits with email alerts"
 msgstr ""
 
 #: views/admin-page.php:150
-#: views/admin-page.php:194
-#: views/admin-page.php:226
-msgid "Low margin"
+msgid "Coupon combination analysis"
 msgstr ""
 
 #: views/admin-page.php:151
+msgid "Per-category margin rules and CSV export"
+msgstr ""
+
+#: views/admin-page.php:153
+msgid "Get notified when Pro launches"
+msgstr ""
+
+#: views/findings.php:37
+#: views/findings.php:57
+msgid "No issues found"
+msgstr ""
+
+#: views/findings.php:39
+#: views/overview.php:34
+msgid "No product has a known cost, so profitability could not be checked."
+msgstr ""
+
+#: views/findings.php:58
+msgid "Every checked product has a cost and sells above your margin threshold."
+msgstr ""
+
+#: views/findings.php:62
+msgid "No products could be checked"
+msgstr ""
+
+#: views/findings.php:63
+msgid "The scan found no published products with a price."
+msgstr ""
+
+#: views/findings.php:73
+#: views/overview.php:22
+#: views/overview.php:24
+msgid "Selling below cost"
+msgstr ""
+
+#: views/findings.php:74
+msgid "The current price is lower than the cost. Every sale loses money on the product itself."
+msgstr ""
+
+#: views/findings.php:80
+msgid "Scheduled sales at risk"
+msgstr ""
+
+#: views/findings.php:81
+msgid "A sale that has not started yet will push the price below cost or below your margin threshold."
+msgstr ""
+
+#: views/findings.php:87
+#: views/findings.php:131
+#: views/findings.php:181
+#: views/findings.php:192
+msgid "Low margin"
+msgstr ""
+
+#: views/findings.php:88
 msgid "The current price is above cost, but the margin is below your threshold. Review before running more promotions."
 msgstr ""
 
-#: views/admin-page.php:167
-#: views/admin-page.php:343
+#: views/findings.php:104
+#: views/preflight-table.php:21
 msgid "Product"
 msgstr ""
 
-#: views/admin-page.php:168
+#: views/findings.php:105
+#: views/findings.php:115
 msgid "Net price"
 msgstr ""
 
-#: views/admin-page.php:169
-#: views/admin-page.php:345
+#: views/findings.php:106
+#: views/findings.php:116
+#: views/preflight-table.php:23
+#: views/preflight-table.php:33
 msgid "Cost"
 msgstr ""
 
-#: views/admin-page.php:170
-#: views/admin-page.php:346
+#: views/findings.php:107
+#: views/findings.php:117
+#: views/preflight-table.php:24
+#: views/preflight-table.php:34
 msgid "Margin"
 msgstr ""
 
-#: views/admin-page.php:171
+#: views/findings.php:108
+#: views/findings.php:118
 msgid "Details"
 msgstr ""
 
 #. translators: %s: loss amount per unit
-#: views/admin-page.php:186
+#: views/findings.php:123
 #, php-format
 msgid "Loss: %s per unit"
 msgstr ""
 
-#: views/admin-page.php:189
+#: views/findings.php:126
 msgid "On sale"
 msgstr ""
 
 #. translators: %s: sale start date
-#: views/admin-page.php:193
+#: views/findings.php:130
 #, php-format
 msgid "Sale starts %s"
 msgstr ""
 
+#: views/findings.php:131
+#: views/findings.php:180
+#: views/findings.php:191
+msgid "Below cost"
+msgstr ""
+
 #. translators: %s: name of the cost data source
-#: views/admin-page.php:197
+#: views/findings.php:134
 #, php-format
 msgid "Cost from %s"
 msgstr ""
 
 #. translators: %s: number of rows not shown
-#: views/admin-page.php:209
-#: views/admin-page.php:259
-#: views/admin-page.php:365
+#: views/findings.php:146
+#: views/findings.php:222
+#: views/preflight-table.php:43
 #, php-format
 msgid "Not shown: %s more."
 msgstr ""
 
-#: views/admin-page.php:218
-msgid "Coupons that could cause losses"
-msgstr ""
-
-#: views/admin-page.php:219
-msgid "Potential risk: applied to the current price of eligible products, this coupon would leave them below cost or below your threshold. Spend limits, customer restrictions and coupon combinations are not evaluated."
-msgstr ""
-
-#: views/admin-page.php:223
-msgid "Coupon"
-msgstr ""
-
-#: views/admin-page.php:224
-#: views/admin-page.php:304
-msgid "Discount"
-msgstr ""
-
-#: views/admin-page.php:227
-msgid "Examples"
-msgstr ""
-
-#: views/admin-page.php:248
-msgid "Missing cost information"
-msgstr ""
-
-#: views/admin-page.php:249
-msgid "These products have no usable cost, so their profitability cannot be checked. WooCommerce stores a zero cost as empty, so products with a cost of 0 also appear here."
-msgstr ""
-
-#: views/admin-page.php:269
-msgid "No issues found"
-msgstr ""
-
-#: views/admin-page.php:270
-msgid "Every checked product has a cost and sells above your margin threshold."
-msgstr ""
-
-#: views/admin-page.php:274
-msgid "No products could be checked"
-msgstr ""
-
-#: views/admin-page.php:275
-msgid "The scan found no published products with a price."
-msgstr ""
-
-#. translators: %s: number of products and variations without a price
-#: views/admin-page.php:284
-#, php-format
-msgid "%s products or variations without a price were skipped."
-msgstr ""
-
 #. translators: %s: number of coupons
-#: views/admin-page.php:293
+#: views/findings.php:158
 #, php-format
 msgid "Fixed amount coupons not analyzed: %s. This version checks percentage coupons only."
 msgstr ""
 
-#: views/admin-page.php:299
+#: views/findings.php:163
+#: views/findings.php:168
+#: views/findings.php:173
+msgid "Coupons that could cause losses"
+msgstr ""
+
+#: views/findings.php:174
+msgid "Potential risk: applied to the current price of eligible products, this coupon would leave them below cost or below your threshold. Spend limits, customer restrictions and coupon combinations are not evaluated."
+msgstr ""
+
+#: views/findings.php:178
+msgid "Coupon"
+msgstr ""
+
+#: views/findings.php:179
+#: views/findings.php:190
+#: views/preflight-panel.php:19
+msgid "Discount"
+msgstr ""
+
+#: views/findings.php:182
+#: views/findings.php:193
+msgid "Examples"
+msgstr ""
+
+#: views/findings.php:204
+#: views/findings.php:210
+msgid "Missing cost information"
+msgstr ""
+
+#: views/findings.php:212
+msgid "These products have no usable cost, so their profitability cannot be checked. WooCommerce stores a zero cost as empty, so products with a cost of 0 also appear here."
+msgstr ""
+
+#: views/findings.php:235
+msgid "Prices include tax in this store. They are converted to net using your store base tax rates before comparison."
+msgstr ""
+
+#: views/findings.php:237
+msgid "Prices are entered without tax in this store and are compared as entered."
+msgstr ""
+
+#. translators: %s: currency code
+#: views/findings.php:242
+#, php-format
+msgid "Costs are assumed to be net of tax, in %s. Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included."
+msgstr ""
+
+#: views/overview.php:32
+msgid "No product with a known cost is selling below cost at its current price."
+msgstr ""
+
+#. translators: 1: number of products checked, 2: number of products with a known cost
+#: views/overview.php:42
+#, php-format
+msgid "%1$s product checked, %2$s with a known cost."
+msgid_plural "%1$s products checked, %2$s with a known cost."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of products and variations without a price
+#: views/overview.php:49
+#, php-format
+msgid "%s products or variations without a price were skipped."
+msgstr ""
+
+#: views/overview.php:54
+msgid "Test a sale before launch"
+msgstr ""
+
+#: views/preflight-panel.php:14
 msgid "Promotion Preflight"
 msgstr ""
 
-#: views/admin-page.php:300
+#: views/preflight-panel.php:15
 msgid "Planning a store-wide sale? See which products would drop below cost or below your threshold before you launch it. Uses the data of the last scan."
 msgstr ""
 
-#: views/admin-page.php:308
+#: views/preflight-panel.php:23
 msgid "applied to"
 msgstr ""
 
-#: views/admin-page.php:310
+#: views/preflight-panel.php:25
 msgid "current price (on top of running sales)"
 msgstr ""
 
-#: views/admin-page.php:311
+#: views/preflight-panel.php:26
 msgid "regular price (replacing running sales)"
 msgstr ""
 
-#: views/admin-page.php:314
+#: views/preflight-panel.php:29
 msgid "Check promotion"
 msgstr ""
 
 #. translators: 1: discount percent, 2: products below cost, 3: products with low margin, 4: products checked
-#: views/admin-page.php:325
+#: views/preflight-panel.php:37
 #, php-format
 msgid "With %1$s off: %2$s below cost, %3$s below threshold, out of %4$s products with a known cost."
 msgstr ""
 
 #. translators: %s: number of products
-#: views/admin-page.php:334
+#: views/preflight-panel.php:46
 #, php-format
 msgid "Skipped without cost: %s."
 msgstr ""
 
-#: views/admin-page.php:344
+#: views/preflight-panel.php:54
+msgid "Per-unit estimate using your last scan. Cart discounts, coupon combinations and checkout rounding are not simulated."
+msgstr ""
+
+#: views/preflight-table.php:22
+#: views/preflight-table.php:32
 msgid "Promo net price"
-msgstr ""
-
-#: views/admin-page.php:375
-msgid "Coming soon"
-msgstr ""
-
-#: views/admin-page.php:376
-msgid "CostGator Pro"
-msgstr ""
-
-#: views/admin-page.php:378
-msgid "Automated scheduled audits with email alerts"
-msgstr ""
-
-#: views/admin-page.php:379
-msgid "Coupon combination analysis"
-msgstr ""
-
-#: views/admin-page.php:380
-msgid "Per-category margin rules and CSV export"
-msgstr ""
-
-#: views/admin-page.php:382
-msgid "Get notified when Pro launches"
-msgstr ""
-
-#: views/admin-page.php:388
-msgid "Settings"
-msgstr ""
-
-#: views/admin-page.php:393
-msgid "Low margin threshold"
-msgstr ""
-
-#: views/admin-page.php:396
-msgid "Save"
 msgstr ""

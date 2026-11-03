@@ -10,12 +10,6 @@
 .costgator-readonly .dashicons { font-size: 16px; width: 16px; height: 16px; vertical-align: text-bottom; color: #00a32a; }
 
 .costgator-meta { color: #50575e; }
-.costgator-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 12px 0 16px; }
-.costgator-card { background: #fff; border: 1px solid #dcdcde; border-left: 4px solid #8c8f94; border-radius: 4px; padding: 12px 16px; }
-.costgator-card.is-critical { border-left-color: #d63638; }
-.costgator-card.is-warning { border-left-color: #dba617; }
-.costgator-card-label { display: block; color: #50575e; font-size: 13px; }
-.costgator-card-value { display: block; font-size: 28px; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
 
 .costgator-assumptions { background: #f6f7f7; border: 1px solid #dcdcde; border-radius: 4px; padding: 10px 14px; color: #50575e; }
 
@@ -32,6 +26,59 @@
 
 .costgator-inline-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .costgator-preflight-summary { font-size: 14px; }
+
+.costgator-overview, .costgator-preflight { background: #fff; border: 1px solid #dcdcde; border-radius: 4px; padding: 16px 20px; margin: 12px 0 16px; }
+.costgator-overview { border-inline-start: 4px solid #8c8f94; }
+.costgator-overview.is-critical { border-inline-start-color: #d63638; }
+.costgator-overview.is-ok { border-inline-start-color: #00a32a; }
+.costgator-overview p { margin: 0 0 8px; }
+.costgator-overview-head { display: flex; align-items: baseline; gap: 10px; }
+.costgator-overview-value { font-size: 40px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+.costgator-overview.is-critical .costgator-overview-value { color: #d63638; }
+.costgator-overview-label { font-size: 16px; font-weight: 600; }
+.costgator-overview-loss { font-size: 14px; }
+.costgator-overview-meta { color: #50575e; }
+.costgator-preflight { border-top: 3px solid var(--wp-admin-theme-color, #2271b1); }
+.costgator-preflight h2 { margin-top: 0; font-size: 18px; }
+.costgator-preflight .costgator-table { margin-top: 12px; }
+.costgator-caveat { color: #50575e; font-size: 12px; }
+
+/* Findings checklist */
+.costgator-checklist { margin: 8px 0 24px; }
+.costgator-check { margin: 0 0 -1px; border-radius: 0; padding: 0 16px; border-inline-start: 4px solid #8c8f94; }
+.costgator-check.is-critical, .costgator-check.is-warning, .costgator-check.is-ok { border-top-width: 1px; border-top-color: #dcdcde; }
+.costgator-check.is-critical { border-inline-start-color: #d63638; }
+.costgator-check.is-warning { border-inline-start-color: #dba617; }
+.costgator-check.is-info { border-inline-start-color: var(--wp-admin-theme-color, #2271b1); }
+.costgator-check.is-ok { border-inline-start-color: #00a32a; }
+.costgator-check:first-of-type { border-start-start-radius: 4px; border-start-end-radius: 4px; }
+.costgator-check:last-child { border-end-start-radius: 4px; border-end-end-radius: 4px; }
+.costgator-check summary { display: flex; align-items: center; gap: 10px; padding: 14px 0; cursor: pointer; list-style: none; }
+.costgator-check summary::-webkit-details-marker { display: none; }
+.costgator-check summary::after { content: "\f140"; font-family: dashicons; font-size: 20px; margin-inline-start: auto; color: #50575e; }
+.costgator-check[open] summary::after { content: "\f142"; }
+.costgator-check summary h2 { margin: 0; font-size: 15px; }
+.costgator-check summary .dashicons { flex: none; color: #8c8f94; }
+.costgator-check.is-critical summary .dashicons { color: #d63638; }
+.costgator-check.is-warning summary .dashicons { color: #dba617; }
+.costgator-check.is-info summary .dashicons { color: var(--wp-admin-theme-color, #2271b1); }
+.costgator-check.is-ok summary .dashicons { color: #00a32a; }
+.costgator-check[open] { padding-bottom: 16px; }
+.costgator-check .costgator-table { margin-top: 8px; }
+
+/* Narrow screens: every table row becomes a small card with labelled values. */
+@media (max-width: 782px) {
+	/* Hidden visually only, so screen readers keep the column headers. */
+	.costgator-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+	.costgator-table, .costgator-table tbody, .costgator-table tr, .costgator-table td { display: block; width: auto; }
+	.costgator-table tr { padding: 8px 12px; border-bottom: 1px solid #dcdcde; }
+	.costgator-table td, .costgator-table td.num { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; text-align: start; white-space: normal; }
+	.costgator-table td:first-child { display: block; font-weight: 600; padding-bottom: 4px; }
+	.costgator-table td[data-label]::before { content: attr(data-label); color: #50575e; font-weight: 400; }
+	.costgator-table td:not(.num)[data-label] { flex-direction: column; gap: 0; }
+	.costgator-check { padding: 0 12px; }
+}
+.costgator-check summary:focus-visible { outline: 2px solid var(--wp-admin-theme-color, #2271b1); outline-offset: 2px; }
 
 
 .costgator-review { background: #fff; border: 1px solid #c3c4c7; border-left: 4px solid #2271b1; padding: 4px 16px; margin: 16px 0; }

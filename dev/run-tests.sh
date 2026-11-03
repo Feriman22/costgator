@@ -11,6 +11,7 @@ $W eval-file /dev-scripts/batch-check.php
 $W plugin check costgator
 python3 dev/smoke.py
 python3 dev/xss-check.py
+$W eval-file /dev-scripts/render-states.php
 $W eval-file /dev-scripts/lifecycle-check.php
 # lifecycle-check runs uninstall.php, so restore the deterministic store last.
 $W eval-file /dev-scripts/seed.php

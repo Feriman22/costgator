@@ -25,9 +25,9 @@ final class Admin {
 	const REVIEW_URL      = 'https://wordpress.org/support/plugin/costgator/reviews/#new-post';
 
 	/**
-	 * Landing page of the upcoming Pro version. The waitlist box stays hidden while this is empty.
+	 * Waitlist signup form of the upcoming Pro version. The waitlist box stays hidden while this is empty.
 	 */
-	const PRO_WAITLIST_URL = 'https://getcostgator.com/';
+	const PRO_WAITLIST_URL = 'https://getcostgator.com/#waitlist';
 
 	/**
 	 * Hook registration.
@@ -296,5 +296,31 @@ final class Admin {
 				}
 			)
 		);
+	}
+
+	/**
+	 * Sort rows worst first. Losses come first, the largest loss per unit on top, then the lowest margins.
+	 *
+	 * Equal losses are ordered by margin.
+	 *
+	 * @param array[] $rows       Rows with a cost, a price and a margin.
+	 * @param string  $price_key  Key of the price to compare with the cost.
+	 * @param string  $margin_key Key of the margin.
+	 * @return array[]
+	 */
+	public static function worst_first( array $rows, string $price_key = 'price', string $margin_key = 'margin' ): array {
+		usort(
+			$rows,
+			static function ( $a, $b ) use ( $price_key, $margin_key ) {
+				$loss_a = max( 0, $a['cost'] - $a[ $price_key ] );
+				$loss_b = max( 0, $b['cost'] - $b[ $price_key ] );
+				if ( ( $loss_a || $loss_b ) && $loss_a !== $loss_b ) {
+					// A zero price has no margin, so losses are compared by amount first.
+					return $loss_b <=> $loss_a;
+				}
+				return (float) $a[ $margin_key ] <=> (float) $b[ $margin_key ];
+			}
+		);
+		return $rows;
 	}
 }
