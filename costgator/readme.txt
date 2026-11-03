@@ -92,7 +92,7 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * Each finding category is now a checklist row that opens on click. Categories with a loss are open by default, categories without findings are listed at the end.
 * Products are sorted by the largest loss per unit first.
 * Result tables are readable on phones.
-* Fixed amount coupons that are not analyzed are now noted in the Risky coupons section.
+* Fixed amount coupons that are not analyzed are now noted in the coupons section.
 
 = 1.0.2 =
 * Promotion Preflight now says how many rows are not shown when more than 100 products are affected.
