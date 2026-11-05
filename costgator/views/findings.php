@@ -113,15 +113,15 @@ foreach ( $costgator_sections as $costgator_section ) :
 				<?php foreach ( array_slice( $costgator_section['rows'], 0, Admin::ROW_LIMIT ) as $costgator_row ) : ?>
 					<tr>
 						<td><?php echo Admin::product_link( $costgator_row ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in product_link(). ?></td>
-						<td class="num" data-label="<?php esc_attr_e( 'Net price', 'costgator' ); ?>"><?php echo wp_kses_post( wc_price( $costgator_row['price'] ) ); ?></td>
-						<td class="num" data-label="<?php esc_attr_e( 'Cost', 'costgator' ); ?>"><?php echo wp_kses_post( wc_price( $costgator_row['cost'] ) ); ?></td>
+						<td class="num" data-label="<?php esc_attr_e( 'Net price', 'costgator' ); ?>"><?php echo wp_kses_post( Admin::money( $costgator_row['price'], $scan ) ); ?></td>
+						<td class="num" data-label="<?php esc_attr_e( 'Cost', 'costgator' ); ?>"><?php echo wp_kses_post( Admin::money( $costgator_row['cost'], $scan ) ); ?></td>
 						<td class="num" data-label="<?php esc_attr_e( 'Margin', 'costgator' ); ?>"><?php echo esc_html( Admin::format_margin( $costgator_row['margin'] ) ); ?></td>
 						<td data-label="<?php esc_attr_e( 'Details', 'costgator' ); ?>">
 							<?php
 							$costgator_details = array();
 							if ( 'below_cost' === $costgator_row['type'] ) {
 								/* translators: %s: loss amount per unit */
-								$costgator_details[] = sprintf( __( 'Loss: %s per unit', 'costgator' ), wp_strip_all_tags( wc_price( $costgator_row['cost'] - $costgator_row['price'] ) ) );
+								$costgator_details[] = sprintf( __( 'Loss: %s per unit', 'costgator' ), wp_strip_all_tags( Admin::money( $costgator_row['cost'] - $costgator_row['price'], $scan ) ) );
 							}
 							if ( ! empty( $costgator_row['on_sale'] ) ) {
 								$costgator_details[] = __( 'On sale', 'costgator' );
@@ -188,7 +188,7 @@ if ( ! $costgator_coupons && ! $costgator_unsupported ) {
 					<?php $costgator_coupon_url = get_edit_post_link( $costgator_coupon_id ); ?>
 					<tr>
 						<td><code><?php echo $costgator_coupon_url ? '<a href="' . esc_url( $costgator_coupon_url ) . '">' . esc_html( $costgator_coupon['code'] ) . '</a>' : esc_html( $costgator_coupon['code'] ); ?></code></td>
-						<td class="num" data-label="<?php esc_attr_e( 'Discount', 'costgator' ); ?>"><?php echo esc_html( number_format_i18n( $costgator_coupon['percent'], 0 ) . '%' ); ?></td>
+						<td class="num" data-label="<?php esc_attr_e( 'Discount', 'costgator' ); ?>"><?php echo esc_html( Admin::percent_label( (float) $costgator_coupon['percent'] ) ); ?></td>
 						<td class="num" data-label="<?php esc_attr_e( 'Below cost', 'costgator' ); ?>"><?php echo esc_html( number_format_i18n( $costgator_coupon['below_cost'] ) ); ?></td>
 						<td class="num" data-label="<?php esc_attr_e( 'Low margin', 'costgator' ); ?>"><?php echo esc_html( number_format_i18n( $costgator_coupon['low_margin'] ) ); ?></td>
 						<td data-label="<?php esc_attr_e( 'Examples', 'costgator' ); ?>"><?php echo esc_html( implode( ', ', array_slice( wp_list_pluck( $costgator_coupon['examples'], 'name' ), 0, 5 ) ) ); ?></td>
@@ -243,6 +243,8 @@ if ( ! $costgator_missing ) {
 		esc_html__( 'Costs are assumed to be net of tax, in %s. Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included.', 'costgator' ),
 		esc_html( $scan['currency'] )
 	);
+	echo ' ';
+	esc_html_e( 'Prices are read as stored on your products. Prices that dynamic pricing or currency switcher plugins calculate on the fly are not included.', 'costgator' );
 	?>
 </p>
 

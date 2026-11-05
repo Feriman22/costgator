@@ -12,6 +12,7 @@ $W plugin check costgator
 python3 dev/smoke.py
 python3 dev/xss-check.py
 $W eval-file /dev-scripts/render-states.php
+$W eval-file /dev-scripts/scan-data-check.php
 $W eval-file /dev-scripts/compat/cog-scenarios.php on
 $W eval-file /dev-scripts/compat/cog-scenarios.php off
 $W eval-file /dev-scripts/lifecycle-check.php

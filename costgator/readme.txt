@@ -4,7 +4,7 @@ Tags: woocommerce, profit, margin, cost of goods, coupons
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,7 @@ Click **Scan My Store** under WooCommerce > CostGator and get a clear list of:
 * Margin is gross margin: (net price - cost) / net price.
 * If your prices include tax, they are converted to net with your store base tax rates and the product tax class before comparison. Costs are assumed to be net of tax and in your store currency.
 * Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included, so this is not a full profit calculation.
+* Prices are read as stored on your products. Prices that dynamic pricing, role based pricing or currency switcher plugins calculate on the fly are not included.
 * Coupon checks are potential risks. Minimum spend, customer restrictions and coupon combinations are not evaluated. Fixed amount coupons are not analyzed in this version.
 
 = Trademarks =
@@ -50,7 +51,7 @@ WooCommerce is a registered trademark of Automattic Inc. This plugin is not affi
 == Installation ==
 
 1. Install and activate the plugin. WooCommerce must be active.
-2. Enable Cost of Goods Sold under WooCommerce > Settings > Advanced > Features and enter your product costs, or use a supported cost plugin.
+2. If your WooCommerce version has it, enable Cost of Goods Sold under WooCommerce > Settings > Advanced > Features and enter your product costs. Or use a supported cost plugin.
 3. Go to WooCommerce > CostGator and click Scan My Store.
 
 == Frequently Asked Questions ==
@@ -62,6 +63,10 @@ No. It only reads products and coupons. It stores the last scan result and your 
 = Why does a product with a cost of 0 appear as missing cost? =
 
 The WooCommerce native Cost of Goods Sold feature stores a zero cost on simple products as empty, so a zero cost and a missing cost cannot be told apart. To keep the results consistent, a cost of 0 is treated as missing for every cost source.
+
+= Does it work with dynamic pricing or currency switcher plugins? =
+
+CostGator reads the prices stored on your products, in your store currency. Prices that a dynamic pricing, role based pricing or currency switcher plugin calculates on the fly, for example in the cart or for a customer group, are not included. If such a plugin applies a store-wide percentage discount, you can test that discount with Promotion Preflight.
 
 = How large a catalog can it handle? =
 
@@ -87,6 +92,15 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 
 == Changelog ==
 
+= 1.0.4 =
+* Fixed: on WooCommerce 9.5 and 9.6 with Cost of Goods Sold enabled, costs from the SkyVerge or WPFactory plugins were ignored on products without a native cost.
+* Fixed: coupons are no longer reported as a risk when coupons are turned off in WooCommerce.
+* Fixed: coupon discounts like 12.5% are shown with their decimals instead of rounded.
+* Fixed: results keep the currency and price decimals of the scan when the store settings change later.
+* A damaged or incomplete scan no longer breaks the CostGator screen and is never shown as a complete result.
+* On WooCommerce versions without built-in Cost of Goods Sold, the notice now points to the supported cost plugins.
+* Documented that prices calculated on the fly by dynamic pricing or currency switcher plugins are not included.
+
 = 1.0.3 =
 * Redesigned the CostGator screen. A summary at the top shows how many products sell below cost and the largest loss per unit.
 * Each finding category is now a checklist row that opens on click. Categories with a loss are open by default, categories without findings are listed at the end.
@@ -109,6 +123,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Fixes for cost plugins on WooCommerce 9.5 and 9.6, disabled coupons, fractional coupon percentages and damaged scan data.
 
 = 1.0.3 =
 A clearer CostGator screen with a summary, a findings checklist and mobile friendly tables.

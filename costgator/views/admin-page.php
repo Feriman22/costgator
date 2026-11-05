@@ -24,12 +24,12 @@ $costgator_preflight_basis   = isset( $_GET['basis'] ) && 'regular' === sanitize
 $costgator_features_url = admin_url( 'admin.php?page=wc-settings&tab=advanced&section=features' );
 
 // Prints "Largest loss: <amount> per unit, <product>" for a row that sells below cost.
-$costgator_largest_loss = static function ( array $row, string $price_key ) {
+$costgator_largest_loss = static function ( array $row, string $price_key ) use ( $scan ) {
 	$row['item_id'] = isset( $row['item_id'] ) ? $row['item_id'] : $row['id'];
 	printf(
 		/* translators: 1: loss amount per unit, 2: product name */
 		esc_html__( 'Largest loss: %1$s per unit, %2$s', 'costgator' ),
-		'<strong>' . wp_kses_post( wc_price( $row['cost'] - $row[ $price_key ] ) ) . '</strong>',
+		'<strong>' . wp_kses_post( Admin::money( $row['cost'] - $row[ $price_key ], $scan ) ) . '</strong>',
 		Admin::product_link( $row ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in product_link().
 	);
 };
@@ -42,7 +42,11 @@ $costgator_largest_loss = static function ( array $row, string $price_key ) {
 		<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved. Run a new scan to apply them.', 'costgator' ); ?></p></div>
 	<?php endif; ?>
 
-	<?php if ( ! Cost_Provider::native_enabled() ) : ?>
+	<?php if ( ! Cost_Provider::native_available() ) : ?>
+		<div class="notice notice-info">
+			<p><?php esc_html_e( 'This WooCommerce version has no built-in Cost of Goods Sold. Enter your product costs with a supported cost plugin, or update WooCommerce to use the built-in feature.', 'costgator' ); ?></p>
+		</div>
+	<?php elseif ( ! Cost_Provider::native_enabled() ) : ?>
 		<div class="notice notice-info">
 			<p>
 				<?php

@@ -29,8 +29,8 @@ if ( ! $costgator_pf_rows ) {
 			<?php $costgator_row['item_id'] = $costgator_row['id']; ?>
 			<tr class="<?php echo $costgator_row['new_price'] < $costgator_row['cost'] ? 'costgator-row-critical' : ''; ?>">
 				<td><?php echo Admin::product_link( $costgator_row ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in product_link(). ?></td>
-				<td class="num" data-label="<?php esc_attr_e( 'Promo net price', 'costgator' ); ?>"><?php echo wp_kses_post( wc_price( $costgator_row['new_price'] ) ); ?></td>
-				<td class="num" data-label="<?php esc_attr_e( 'Cost', 'costgator' ); ?>"><?php echo wp_kses_post( wc_price( $costgator_row['cost'] ) ); ?></td>
+				<td class="num" data-label="<?php esc_attr_e( 'Promo net price', 'costgator' ); ?>"><?php echo wp_kses_post( Admin::money( $costgator_row['new_price'], $scan ) ); ?></td>
+				<td class="num" data-label="<?php esc_attr_e( 'Cost', 'costgator' ); ?>"><?php echo wp_kses_post( Admin::money( $costgator_row['cost'], $scan ) ); ?></td>
 				<td class="num" data-label="<?php esc_attr_e( 'Margin', 'costgator' ); ?>"><?php echo esc_html( Admin::format_margin( $costgator_row['new_margin'] ) ); ?></td>
 			</tr>
 		<?php endforeach; ?>

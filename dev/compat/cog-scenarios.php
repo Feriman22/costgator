@@ -78,6 +78,16 @@ $scenarios = array(
 	'native cost and Cost of Goods cost on one item' => array( $simple( 'BOTH', '12', 30.0 ), $native ? 30.0 : 12.0, $native ? Cost_Provider::SOURCE_NATIVE : $sky ),
 );
 
+// WooCommerce 9.5 and 9.6 had no nullable getter and returned 0 for an unset native cost.
+// A product class with that signature must still fall back to the Cost of Goods value.
+$legacy_id = $simple( 'LEGACY', '12' )->get_id();
+$legacy    = new class( $legacy_id ) extends WC_Product_Simple {
+	public function get_cogs_value(): float {
+		return 0.0;
+	}
+};
+$scenarios['unset native cost read as 0 by WooCommerce 9.5 and 9.6'] = array( $legacy, 12.0, $sky );
+
 $failed = 0;
 foreach ( $scenarios as $label => list( $product, $cost, $source ) ) {
 	$got = Cost_Provider::get( $product );

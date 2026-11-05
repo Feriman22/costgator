@@ -40,10 +40,11 @@ final class Auditor {
 	 *
 	 * @param float $threshold  Minimum margin in percent.
 	 * @param int[] $coupon_ids Percentage coupon IDs to evaluate.
+	 * @param int   $decimals   Price decimals of the scan.
 	 */
-	public function __construct( float $threshold, array $coupon_ids ) {
+	public function __construct( float $threshold, array $coupon_ids, int $decimals ) {
 		$this->threshold = $threshold;
-		$this->decimals  = wc_get_price_decimals();
+		$this->decimals  = $decimals;
 		$this->coupons   = array();
 		foreach ( $coupon_ids as $coupon_id ) {
 			$coupon = new \WC_Coupon( $coupon_id );
@@ -59,6 +60,14 @@ final class Auditor {
 	 * @return array{ids: int[], unsupported: int}
 	 */
 	public static function find_coupons(): array {
+		// With coupons turned off in WooCommerce no coupon can be applied, so none is a risk.
+		if ( ! wc_coupons_enabled() ) {
+			return array(
+				'ids'         => array(),
+				'unsupported' => 0,
+			);
+		}
+
 		$ids         = get_posts(
 			array(
 				'post_type'      => 'shop_coupon',

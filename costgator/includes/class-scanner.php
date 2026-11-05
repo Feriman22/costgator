@@ -29,9 +29,9 @@ final class Scanner {
 	 * Start a new scan, discarding any unfinished one.
 	 *
 	 * @param float $threshold Minimum margin in percent.
-	 * @return array Public scan status.
+	 * @return array|\WP_Error Public scan status.
 	 */
-	public static function start( float $threshold ): array {
+	public static function start( float $threshold ) {
 		$coupons = Auditor::find_coupons();
 		$ids     = self::product_ids();
 
@@ -48,13 +48,20 @@ final class Scanner {
 			'native_cogs'         => Cost_Provider::native_enabled(),
 			'prices_include_tax'  => wc_tax_enabled() && wc_prices_include_tax(),
 			'currency'            => get_woocommerce_currency(),
+			'decimals'            => wc_get_price_decimals(),
 			'skipped_no_price'    => 0,
 			'chunks'              => 0,
 			'coupons'             => array(),
 		);
 		// The ID snapshot never changes during a scan, so it is written once instead of with every batch.
-		update_option( self::OPTION_IDS, $ids, false );
-		self::save_running( $scan );
+		// It is deleted first, because update_option() cannot tell a failed write from an unchanged value.
+		delete_option( self::OPTION_IDS );
+		if ( ! add_option( self::OPTION_IDS, $ids, '', false ) || ! self::save_running( $scan ) ) {
+			// Never leave an older running scan next to the new ID list.
+			delete_option( self::OPTION_RUNNING );
+			delete_option( self::OPTION_IDS );
+			return new \WP_Error( 'costgator_write_failed', __( 'Could not save scan results.', 'costgator' ) );
+		}
 		self::delete_orphan_chunks();
 
 		return self::status( $scan );
@@ -68,12 +75,19 @@ final class Scanner {
 	 */
 	public static function step( string $scan_id ) {
 		$scan = get_option( self::OPTION_RUNNING );
-		if ( ! is_array( $scan ) || $scan['scan_id'] !== $scan_id ) {
+		if ( ! is_array( $scan ) || ! isset( $scan['scan_id'] ) || $scan['scan_id'] !== $scan_id ) {
 			return new \WP_Error( 'costgator_stale_scan', __( 'This scan was replaced by a newer one.', 'costgator' ) );
 		}
 
-		$ids            = get_option( self::OPTION_IDS );
-		$auditor        = new Auditor( (float) $scan['threshold'], $scan['coupon_ids'] );
+		// A missing or shortened ID list would skip products and still end in a result that looks complete.
+		$ids = get_option( self::OPTION_IDS );
+		if ( ! is_array( $ids ) || ! isset( $scan['total_products'], $scan['processed_products'] ) || count( $ids ) !== (int) $scan['total_products'] ) {
+			delete_option( self::OPTION_RUNNING );
+			delete_option( self::OPTION_IDS );
+			return new \WP_Error( 'costgator_scan_data', __( 'The scan data is incomplete. Please start a new scan.', 'costgator' ) );
+		}
+
+		$auditor        = new Auditor( (float) $scan['threshold'], $scan['coupon_ids'], self::decimals( $scan ) );
 		$items          = 0;
 		$batch_products = 0;
 		$chunk          = array(
@@ -161,7 +175,8 @@ final class Scanner {
 		for ( $attempt = 0; $attempt < 2; $attempt++ ) {
 			wp_cache_delete( self::OPTION_RESULT, 'options' );
 			$scan = get_option( self::OPTION_RESULT );
-			if ( ! is_array( $scan ) || ! isset( $scan['chunks'] ) ) {
+			// A damaged result reads as no result, so the screen still loads and a new scan can replace it.
+			if ( ! self::valid_result( $scan ) ) {
 				return null;
 			}
 
@@ -169,15 +184,162 @@ final class Scanner {
 			$scan['findings'] = array();
 			for ( $i = 0; $i < $scan['chunks']; $i++ ) {
 				$chunk = get_option( self::chunk_name( $scan, $i ) );
-				if ( ! is_array( $chunk ) ) {
+				if ( false === $chunk ) {
 					continue 2;
 				}
-				array_push( $scan['items'], ...$chunk['items'] );
-				array_push( $scan['findings'], ...$chunk['findings'] );
+				if ( ! is_array( $chunk ) || ! isset( $chunk['items'], $chunk['findings'] ) || ! is_array( $chunk['items'] ) || ! is_array( $chunk['findings'] ) ) {
+					return null;
+				}
+				foreach ( $chunk['items'] as $row ) {
+					if ( ! self::valid_item( $row ) ) {
+						return null;
+					}
+					$scan['items'][] = $row;
+				}
+				foreach ( $chunk['findings'] as $row ) {
+					if ( ! self::valid_finding( $row ) ) {
+						return null;
+					}
+					$scan['findings'][] = $row;
+				}
 			}
 			return $scan;
 		}
 		return null;
+	}
+
+	/**
+	 * Whether a stored result header has the fields and types the results screen relies on.
+	 *
+	 * @param mixed $scan Stored result.
+	 * @return bool
+	 */
+	private static function valid_result( $scan ): bool {
+		if ( ! is_array( $scan ) || ! self::has_keys( $scan, array( 'scan_id', 'chunks', 'finished', 'threshold', 'currency', 'coupons', 'unsupported_coupons', 'prices_include_tax', 'skipped_no_price' ) ) ) {
+			return false;
+		}
+		if ( ! is_string( $scan['scan_id'] ) || '' === $scan['scan_id'] || ! is_string( $scan['currency'] ) || '' === $scan['currency'] || ! is_bool( $scan['prices_include_tax'] ) ) {
+			return false;
+		}
+		if ( ! is_int( $scan['chunks'] ) || $scan['chunks'] < 0 || ! is_int( $scan['finished'] ) || ! is_numeric( $scan['threshold'] ) || ! self::count_value( $scan['unsupported_coupons'] ) || ! self::count_value( $scan['skipped_no_price'] ) ) {
+			return false;
+		}
+		if ( array_key_exists( 'decimals', $scan ) && ! self::count_value( $scan['decimals'] ) ) {
+			return false;
+		}
+		if ( ! is_array( $scan['coupons'] ) ) {
+			return false;
+		}
+		foreach ( $scan['coupons'] as $coupon ) {
+			if ( ! is_array( $coupon ) || ! self::has_keys( $coupon, array( 'code', 'percent', 'below_cost', 'low_margin', 'examples' ) ) ) {
+				return false;
+			}
+			if ( ! is_scalar( $coupon['code'] ) || ! is_numeric( $coupon['percent'] ) || ! self::count_value( $coupon['below_cost'] ) || ! self::count_value( $coupon['low_margin'] ) || ! is_array( $coupon['examples'] ) ) {
+				return false;
+			}
+			foreach ( $coupon['examples'] as $example ) {
+				if ( ! is_array( $example ) || ! isset( $example['name'] ) || ! is_scalar( $example['name'] ) ) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Whether a stored item row has every field the Auditor writes, with the expected types.
+	 *
+	 * @param mixed $row Item row.
+	 * @return bool
+	 */
+	private static function valid_item( $row ): bool {
+		return is_array( $row )
+			&& self::has_keys( $row, array( 'id', 'parent_id', 'name', 'sku', 'net_current', 'net_regular', 'on_sale', 'cost', 'cost_source' ) )
+			&& is_numeric( $row['id'] ) && is_numeric( $row['parent_id'] ) && is_scalar( $row['name'] ) && is_scalar( $row['sku'] )
+			&& is_numeric( $row['net_current'] ) && self::number_or_null( $row['net_regular'] ) && self::number_or_null( $row['cost'] )
+			&& is_scalar( $row['on_sale'] ) && ( null === $row['cost_source'] || is_string( $row['cost_source'] ) );
+	}
+
+	/**
+	 * Whether a stored finding row has every field the Auditor writes for its type, with the expected types.
+	 * An unknown type is rejected, because no category would show it and a loss could disappear.
+	 *
+	 * @param mixed $row Finding row.
+	 * @return bool
+	 */
+	private static function valid_finding( $row ): bool {
+		if ( ! is_array( $row ) || ! self::has_keys( $row, array( 'item_id', 'parent_id', 'name', 'sku', 'cost', 'source', 'type' ) ) ) {
+			return false;
+		}
+		if ( ! is_numeric( $row['item_id'] ) || ! is_numeric( $row['parent_id'] ) || ! is_scalar( $row['name'] ) || ! is_scalar( $row['sku'] )
+			|| ! self::number_or_null( $row['cost'] ) || ! ( null === $row['source'] || is_string( $row['source'] ) ) ) {
+			return false;
+		}
+		// A switch compares loosely, so a non-string type such as true would match the first case.
+		if ( ! is_string( $row['type'] ) ) {
+			return false;
+		}
+		// The tables show a sale start date for any finding that has one.
+		if ( array_key_exists( 'from', $row ) && ! is_int( $row['from'] ) ) {
+			return false;
+		}
+		switch ( $row['type'] ) {
+			case 'missing_cost':
+				return true;
+			case Margin::STATUS_BELOW_COST:
+			case Margin::STATUS_LOW_MARGIN:
+				return self::has_keys( $row, array( 'price', 'margin', 'on_sale' ) ) && is_numeric( $row['cost'] ) && is_numeric( $row['price'] ) && self::number_or_null( $row['margin'] ) && is_scalar( $row['on_sale'] );
+			case 'future_' . Margin::STATUS_BELOW_COST:
+			case 'future_' . Margin::STATUS_LOW_MARGIN:
+				return self::has_keys( $row, array( 'price', 'margin', 'from' ) ) && is_numeric( $row['cost'] ) && is_numeric( $row['price'] ) && self::number_or_null( $row['margin'] ) && is_int( $row['from'] );
+		}
+		return false;
+	}
+
+	/**
+	 * Whether every key exists, null values included.
+	 *
+	 * @param array    $row  Row.
+	 * @param string[] $keys Keys.
+	 * @return bool
+	 */
+	private static function has_keys( array $row, array $keys ): bool {
+		foreach ( $keys as $key ) {
+			if ( ! array_key_exists( $key, $row ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Whether a value is null or numeric.
+	 *
+	 * @param mixed $value Value.
+	 * @return bool
+	 */
+	private static function number_or_null( $value ): bool {
+		return null === $value || is_numeric( $value );
+	}
+
+	/**
+	 * Whether a value is a whole number of zero or more.
+	 *
+	 * @param mixed $value Value.
+	 * @return bool
+	 */
+	private static function count_value( $value ): bool {
+		return is_numeric( $value ) && (float) $value >= 0 && floor( (float) $value ) === (float) $value;
+	}
+
+	/**
+	 * Price decimals a scan was made with. Scans before 1.0.4 did not store them.
+	 *
+	 * @param array $scan Scan state.
+	 * @return int
+	 */
+	public static function decimals( array $scan ): int {
+		return isset( $scan['decimals'] ) ? (int) $scan['decimals'] : wc_get_price_decimals();
 	}
 
 	/**
@@ -212,7 +374,7 @@ final class Scanner {
 		foreach ( array( self::OPTION_RESULT, self::OPTION_RUNNING ) as $option ) {
 			wp_cache_delete( $option, 'options' );
 			$scan = get_option( $option );
-			if ( is_array( $scan ) && isset( $scan['scan_id'] ) ) {
+			if ( is_array( $scan ) && isset( $scan['scan_id'] ) && is_string( $scan['scan_id'] ) ) {
 				$keep[] = self::chunk_prefix( $scan );
 			}
 		}
@@ -245,7 +407,7 @@ final class Scanner {
 			'checked'    => 0,
 			'no_cost'    => 0,
 		);
-		$decimals = wc_get_price_decimals();
+		$decimals = self::decimals( $scan );
 
 		foreach ( $scan['items'] as $item ) {
 			if ( null === $item['cost'] || $item['cost'] <= 0 ) {
@@ -258,10 +420,11 @@ final class Scanner {
 
 			$status = Margin::classify( $new, $item['cost'], $threshold, $decimals );
 			if ( Margin::STATUS_OK !== $status ) {
-				$out[ $status ][] = $item + array(
+				// The calculated values come first, so stored keys of the same name cannot replace them.
+				$out[ $status ][] = array(
 					'new_price'  => $new,
 					'new_margin' => Margin::percent( $new, $item['cost'] ),
-				);
+				) + $item;
 			}
 		}
 

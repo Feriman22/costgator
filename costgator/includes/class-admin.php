@@ -113,7 +113,11 @@ final class Admin {
 	 */
 	public static function ajax_start() {
 		self::verify_ajax();
-		wp_send_json_success( Scanner::start( self::threshold() ) );
+		$status = Scanner::start( self::threshold() );
+		if ( is_wp_error( $status ) ) {
+			wp_send_json_error( array( 'message' => $status->get_error_message() ), 500 );
+		}
+		wp_send_json_success( $status );
 	}
 
 	/**
@@ -255,6 +259,37 @@ final class Admin {
 			$html .= ' <span class="costgator-sku">' . esc_html( $row['sku'] ) . '</span>';
 		}
 		return $html;
+	}
+
+	/**
+	 * Format an amount of a stored scan in the currency and precision it was scanned with.
+	 *
+	 * @param float $amount Amount.
+	 * @param array $scan   Scan the amount comes from.
+	 * @return string HTML from wc_price().
+	 */
+	public static function money( float $amount, array $scan ): string {
+		return wc_price(
+			$amount,
+			array(
+				'currency' => isset( $scan['currency'] ) ? (string) $scan['currency'] : '',
+				'decimals' => Scanner::decimals( $scan ),
+			)
+		);
+	}
+
+	/**
+	 * Percentage with as many decimals as it needs: 25%, 12.5%, 0.004%.
+	 *
+	 * @param float $percent Percentage.
+	 * @return string
+	 */
+	public static function percent_label( float $percent ): string {
+		$decimals = 0;
+		while ( $decimals < 6 && abs( round( $percent, $decimals ) - $percent ) > 1e-9 ) {
+			++$decimals;
+		}
+		return number_format_i18n( $percent, $decimals ) . '%';
 	}
 
 	/**

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CostGator Margin Audit for WooCommerce 1.0.3\n"
+"Project-Id-Version: CostGator Margin Audit for WooCommerce 1.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/costgator\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-03T09:50:28+00:00\n"
+"POT-Creation-Date: 2026-11-05T16:29:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: costgator\n"
@@ -57,25 +57,30 @@ msgstr ""
 msgid "The scan failed. Please try again."
 msgstr ""
 
-#: includes/class-admin.php:139
-#: includes/class-admin.php:148
-#: includes/class-admin.php:206
+#: includes/class-admin.php:143
+#: includes/class-admin.php:152
+#: includes/class-admin.php:210
 msgid "You are not allowed to do this."
 msgstr ""
 
-#: includes/class-admin.php:268
+#: includes/class-admin.php:303
 msgid "WooCommerce COGS"
 msgstr ""
 
-#: includes/class-scanner.php:72
-#: includes/class-scanner.php:128
+#: includes/class-scanner.php:63
+#: includes/class-scanner.php:148
+#: includes/class-scanner.php:156
+#: includes/class-scanner.php:162
+msgid "Could not save scan results."
+msgstr ""
+
+#: includes/class-scanner.php:79
+#: includes/class-scanner.php:142
 msgid "This scan was replaced by a newer one."
 msgstr ""
 
-#: includes/class-scanner.php:134
-#: includes/class-scanner.php:142
-#: includes/class-scanner.php:148
-msgid "Could not save scan results."
+#: includes/class-scanner.php:87
+msgid "The scan data is incomplete. Please start a new scan."
 msgstr ""
 
 #. translators: 1: loss amount per unit, 2: product name
@@ -92,83 +97,87 @@ msgstr ""
 msgid "Settings saved. Run a new scan to apply them."
 msgstr ""
 
+#: views/admin-page.php:47
+msgid "This WooCommerce version has no built-in Cost of Goods Sold. Enter your product costs with a supported cost plugin, or update WooCommerce to use the built-in feature."
+msgstr ""
+
 #. translators: %s: link to the WooCommerce features settings
-#: views/admin-page.php:51
+#: views/admin-page.php:55
 #, php-format
 msgid "WooCommerce Cost of Goods Sold is not enabled. Enable it under %s and enter product costs, or use a supported cost plugin."
 msgstr ""
 
-#: views/admin-page.php:52
+#: views/admin-page.php:56
 msgid "WooCommerce > Settings > Advanced > Features"
 msgstr ""
 
-#: views/admin-page.php:60
+#: views/admin-page.php:64
 msgid "Scan My Store"
 msgstr ""
 
-#: views/admin-page.php:67
+#: views/admin-page.php:71
 msgid "Read-only audit. No prices, products, orders or coupons are modified."
 msgstr ""
 
-#: views/admin-page.php:73
+#: views/admin-page.php:77
 msgid "No scan yet. Click Scan My Store to check your catalog."
 msgstr ""
 
 #. translators: %s: number of products with a known cost
-#: views/admin-page.php:102
+#: views/admin-page.php:106
 #, php-format
 msgid "CostGator checked %s product with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it."
 msgid_plural "CostGator checked %s products with a known cost. If it helped you, a short review on WordPress.org helps other store owners find it."
 msgstr[0] ""
 msgstr[1] ""
 
-#: views/admin-page.php:108
+#: views/admin-page.php:112
 msgid "Leave a review"
 msgstr ""
 
-#: views/admin-page.php:109
+#: views/admin-page.php:113
 msgid "Don't ask again"
 msgstr ""
 
 #. translators: 1: date and time of the scan, 2: margin threshold
-#: views/admin-page.php:118
+#: views/admin-page.php:122
 #, php-format
 msgid "Last scan: %1$s. Low margin threshold: %2$s."
 msgstr ""
 
-#: views/admin-page.php:132
+#: views/admin-page.php:136
 msgid "Settings"
 msgstr ""
 
-#: views/admin-page.php:137
+#: views/admin-page.php:141
 msgid "Low margin threshold"
 msgstr ""
 
-#: views/admin-page.php:140
+#: views/admin-page.php:144
 msgid "Save"
 msgstr ""
 
-#: views/admin-page.php:146
+#: views/admin-page.php:150
 msgid "Coming soon"
 msgstr ""
 
-#: views/admin-page.php:147
+#: views/admin-page.php:151
 msgid "CostGator Pro"
 msgstr ""
 
-#: views/admin-page.php:149
+#: views/admin-page.php:153
 msgid "Automated scheduled audits with email alerts"
 msgstr ""
 
-#: views/admin-page.php:150
+#: views/admin-page.php:154
 msgid "Coupon combination analysis"
 msgstr ""
 
-#: views/admin-page.php:151
+#: views/admin-page.php:155
 msgid "Per-category margin rules and CSV export"
 msgstr ""
 
-#: views/admin-page.php:153
+#: views/admin-page.php:157
 msgid "Get notified when Pro launches"
 msgstr ""
 
@@ -213,9 +222,9 @@ msgid "A sale that has not started yet will push the price below cost or below y
 msgstr ""
 
 #: views/findings.php:87
-#: views/findings.php:131
-#: views/findings.php:181
-#: views/findings.php:192
+#: views/findings.php:132
+#: views/findings.php:182
+#: views/findings.php:193
 msgid "Low margin"
 msgstr ""
 
@@ -223,123 +232,127 @@ msgstr ""
 msgid "The current price is above cost, but the margin is below your threshold. Review before running more promotions."
 msgstr ""
 
-#: views/findings.php:104
+#: views/findings.php:105
 #: views/preflight-table.php:21
 msgid "Product"
 msgstr ""
 
-#: views/findings.php:105
-#: views/findings.php:115
+#: views/findings.php:106
+#: views/findings.php:116
 msgid "Net price"
 msgstr ""
 
-#: views/findings.php:106
-#: views/findings.php:116
+#: views/findings.php:107
+#: views/findings.php:117
 #: views/preflight-table.php:23
 #: views/preflight-table.php:33
 msgid "Cost"
 msgstr ""
 
-#: views/findings.php:107
-#: views/findings.php:117
+#: views/findings.php:108
+#: views/findings.php:118
 #: views/preflight-table.php:24
 #: views/preflight-table.php:34
 msgid "Margin"
 msgstr ""
 
-#: views/findings.php:108
-#: views/findings.php:118
+#: views/findings.php:109
+#: views/findings.php:119
 msgid "Details"
 msgstr ""
 
 #. translators: %s: loss amount per unit
-#: views/findings.php:123
+#: views/findings.php:124
 #, php-format
 msgid "Loss: %s per unit"
 msgstr ""
 
-#: views/findings.php:126
+#: views/findings.php:127
 msgid "On sale"
 msgstr ""
 
 #. translators: %s: sale start date
-#: views/findings.php:130
+#: views/findings.php:131
 #, php-format
 msgid "Sale starts %s"
 msgstr ""
 
-#: views/findings.php:131
-#: views/findings.php:180
-#: views/findings.php:191
+#: views/findings.php:132
+#: views/findings.php:181
+#: views/findings.php:192
 msgid "Below cost"
 msgstr ""
 
 #. translators: %s: name of the cost data source
-#: views/findings.php:134
+#: views/findings.php:135
 #, php-format
 msgid "Cost from %s"
 msgstr ""
 
 #. translators: %s: number of rows not shown
-#: views/findings.php:146
-#: views/findings.php:222
+#: views/findings.php:147
+#: views/findings.php:223
 #: views/preflight-table.php:43
 #, php-format
 msgid "Not shown: %s more."
 msgstr ""
 
 #. translators: %s: number of coupons
-#: views/findings.php:158
+#: views/findings.php:159
 #, php-format
 msgid "Fixed amount coupons not analyzed: %s. This version checks percentage coupons only."
 msgstr ""
 
-#: views/findings.php:163
-#: views/findings.php:168
-#: views/findings.php:173
+#: views/findings.php:164
+#: views/findings.php:169
+#: views/findings.php:174
 msgid "Coupons that could cause losses"
 msgstr ""
 
-#: views/findings.php:174
+#: views/findings.php:175
 msgid "Potential risk: applied to the current price of eligible products, this coupon would leave them below cost or below your threshold. Spend limits, customer restrictions and coupon combinations are not evaluated."
 msgstr ""
 
-#: views/findings.php:178
+#: views/findings.php:179
 msgid "Coupon"
 msgstr ""
 
-#: views/findings.php:179
-#: views/findings.php:190
+#: views/findings.php:180
+#: views/findings.php:191
 #: views/preflight-panel.php:19
 msgid "Discount"
 msgstr ""
 
-#: views/findings.php:182
-#: views/findings.php:193
+#: views/findings.php:183
+#: views/findings.php:194
 msgid "Examples"
 msgstr ""
 
-#: views/findings.php:204
-#: views/findings.php:210
+#: views/findings.php:205
+#: views/findings.php:211
 msgid "Missing cost information"
 msgstr ""
 
-#: views/findings.php:212
+#: views/findings.php:213
 msgid "These products have no usable cost, so their profitability cannot be checked. WooCommerce stores a zero cost as empty, so products with a cost of 0 also appear here."
 msgstr ""
 
-#: views/findings.php:235
+#: views/findings.php:236
 msgid "Prices include tax in this store. They are converted to net using your store base tax rates before comparison."
 msgstr ""
 
-#: views/findings.php:237
+#: views/findings.php:238
 msgid "Prices are entered without tax in this store and are compared as entered."
 msgstr ""
 
 #. translators: %s: currency code
-#: views/findings.php:242
+#: views/findings.php:243
 #, php-format
 msgid "Costs are assumed to be net of tax, in %s. Only product price and cost are compared. Shipping, payment fees, marketing and other costs are not included."
+msgstr ""
+
+#: views/findings.php:247
+msgid "Prices are read as stored on your products. Prices that dynamic pricing or currency switcher plugins calculate on the fly are not included."
 msgstr ""
 
 #: views/overview.php:32

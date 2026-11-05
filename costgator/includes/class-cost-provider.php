@@ -24,9 +24,16 @@ final class Cost_Provider {
 	 * @return bool
 	 */
 	public static function native_enabled(): bool {
-		return class_exists( FeaturesUtil::class )
-			&& method_exists( 'WC_Product', 'get_cogs_total_value' )
-			&& FeaturesUtil::feature_is_enabled( 'cost_of_goods_sold' );
+		return self::native_available() && FeaturesUtil::feature_is_enabled( 'cost_of_goods_sold' );
+	}
+
+	/**
+	 * Whether this WooCommerce version has the Cost of Goods Sold feature at all.
+	 *
+	 * @return bool
+	 */
+	public static function native_available(): bool {
+		return class_exists( FeaturesUtil::class ) && method_exists( 'WC_Product', 'get_cogs_total_value' );
 	}
 
 	/**
@@ -96,13 +103,33 @@ final class Cost_Provider {
 	 * @return bool
 	 */
 	private static function has_native_value( \WC_Product $product ): bool {
-		if ( null !== $product->get_cogs_value() ) {
+		if ( self::native_value_set( $product ) ) {
 			return true;
 		}
 		if ( $product->is_type( 'variation' ) ) {
 			$parent = wc_get_product( $product->get_parent_id() );
-			return $parent && null !== $parent->get_cogs_value();
+			return $parent && self::native_value_set( $parent );
 		}
 		return false;
+	}
+
+	/**
+	 * Whether a native cost is set on this product itself.
+	 *
+	 * Before WooCommerce 9.7 the getter could not return null and an unset cost read as 0, so there
+	 * 0 counts as unset and a cost plugin value can still be used. A zero cost is treated as missing anyway.
+	 *
+	 * @param \WC_Product $product Product or variation.
+	 * @return bool
+	 */
+	private static function native_value_set( \WC_Product $product ): bool {
+		static $nullable = array();
+		$class = get_class( $product );
+		if ( ! isset( $nullable[ $class ] ) ) {
+			$type               = ( new \ReflectionMethod( $product, 'get_cogs_value' ) )->getReturnType();
+			$nullable[ $class ] = ! $type || $type->allowsNull();
+		}
+		$value = $product->get_cogs_value();
+		return $nullable[ $class ] ? null !== $value : 0.0 !== (float) $value;
 	}
 }

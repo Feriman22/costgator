@@ -59,6 +59,26 @@ $states = array(
 		'expect' => array( 'id="costgator-future" open' ),
 		'reject' => array(),
 	),
+	'scan currency'      => array(
+		'scan'   => array(
+			'currency' => 'EUR',
+			'decimals' => 2,
+			'items'    => array( array( 'cost' => 5.25 ) + $item ),
+			'findings' => array( array( 'type' => 'below_cost', 'cost' => 5.25, 'price' => 4.0, 'margin' => -31.25, 'source' => 'cogs' ) + $item ),
+			'coupons'  => array( 7 => array( 'code' => 'half', 'percent' => 12.5, 'below_cost' => 1, 'low_margin' => 0, 'examples' => array( array( 'name' => 'X' ) ) ) ),
+		),
+		// The test store uses 0 decimals, so 5.25 and 1.25 only show when the scan precision is used.
+		'expect' => array( '&euro;', '>12.5%<', '5.25<', '1.25<' ),
+		'reject' => array( 'Ft', '>13%<' ),
+	),
+	'long coupon percent' => array(
+		'scan'   => array(
+			'items'   => array( array( 'cost' => 5.0 ) + $item ),
+			'coupons' => array( 7 => array( 'code' => 'tiny', 'percent' => 0.004, 'below_cost' => 0, 'low_margin' => 1, 'examples' => array( array( 'name' => 'X' ) ) ) ),
+		),
+		'expect' => array( '>0.004%<' ),
+		'reject' => array( '>0%<' ),
+	),
 	'no items'           => array(
 		'scan'   => array(),
 		'expect' => array( 'No products could be checked', 'is-none' ),
