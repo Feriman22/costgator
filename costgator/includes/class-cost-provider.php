@@ -28,6 +28,21 @@ final class Cost_Provider {
 	}
 
 	/**
+	 * Read a decimal comma as a point, as the WPFactory plugin does when it reads its own costs.
+	 * Its bulk editor, and its save with the comma option turned off, store costs such as "12,50".
+	 * A value that also has a point, such as "1.234,56", is left alone and reads as no cost.
+	 *
+	 * @param mixed $value Stored meta value.
+	 * @return mixed
+	 */
+	private static function normalize_decimal( $value ) {
+		if ( is_string( $value ) && false !== strpos( $value, ',' ) && false === strpos( $value, '.' ) ) {
+			return str_replace( ',', '.', trim( $value ) );
+		}
+		return $value;
+	}
+
+	/**
 	 * Whether this WooCommerce version has the Cost of Goods Sold feature at all.
 	 *
 	 * @return bool
@@ -80,7 +95,7 @@ final class Cost_Provider {
 		// The product's own cost wins over its parent's, whichever plugin stored it.
 		foreach ( $ids as $id ) {
 			foreach ( self::meta_sources() as $key => $label ) {
-				$value = get_post_meta( $id, $key, true );
+				$value = self::normalize_decimal( get_post_meta( $id, $key, true ) );
 				if ( '' !== $value && is_numeric( $value ) ) {
 					return array(
 						'cost'   => (float) $value,

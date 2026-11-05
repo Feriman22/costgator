@@ -4,7 +4,7 @@ Tags: woocommerce, profit, margin, cost of goods, coupons
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 
 == Changelog ==
 
+= 1.0.5 =
+* Fixed: costs stored with a decimal comma, such as 12,50, are now read. The WPFactory Cost of Goods plugin can store costs this way, and these products were listed as missing cost.
+
 = 1.0.4 =
 * Fixed: on WooCommerce 9.5 and 9.6 with Cost of Goods Sold enabled, costs from the SkyVerge or WPFactory plugins were ignored on products without a native cost.
 * Fixed: coupons are no longer reported as a risk when coupons are turned off in WooCommerce.
@@ -123,6 +126,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+Reads costs stored with a decimal comma, as the WPFactory Cost of Goods plugin can save them.
 
 = 1.0.4 =
 Fixes for cost plugins on WooCommerce 9.5 and 9.6, disabled coupons, fractional coupon percentages and damaged scan data.
