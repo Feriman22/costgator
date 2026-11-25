@@ -1,8 +1,8 @@
-# CostGator Margin Audit for WooCommerce
+# CostGator: Profit Margin and Below Cost Checker for WooCommerce
 
 Find WooCommerce products, sales and coupons that sell below cost or below your margin. Test a discount before you launch it.
 
-This is the development repository of the free [CostGator Margin Audit for WooCommerce](https://wordpress.org/plugins/costgator/) plugin.
+This is the development repository of the free [CostGator: Profit Margin and Below Cost Checker for WooCommerce](https://wordpress.org/plugins/costgator/) plugin.
 
 ![Demo: scan a store, then check a 25% promotion](.github/demo.gif)
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:          CostGator Margin Audit for WooCommerce
+ * Plugin Name:          CostGator: Profit Margin and Below Cost Checker for WooCommerce
  * Description:          Find WooCommerce products, sales and coupons that sell below cost or below your margin. Test a discount before you launch it.
- * Version:              1.0.5
+ * Version:              1.0.6
  * Requires at least:    6.5
  * Requires PHP:         7.4
  * Requires Plugins:     woocommerce
@@ -11,14 +11,14 @@
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:          costgator
  * WC requires at least: 8.0
- * WC tested up to:      11.2
+ * WC tested up to:      11.3
  *
  * @package CostGator
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'COSTGATOR_VERSION', '1.0.5' );
+define( 'COSTGATOR_VERSION', '1.0.6' );
 define( 'COSTGATOR_FILE', __FILE__ );
 define( 'COSTGATOR_DIR', plugin_dir_path( __FILE__ ) );
 

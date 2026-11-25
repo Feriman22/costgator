@@ -1,14 +1,14 @@
-=== CostGator Margin Audit for WooCommerce ===
+=== CostGator: Profit Margin and Below Cost Checker for WooCommerce ===
 Contributors: feriman
 Tags: woocommerce, profit, margin, cost of goods, coupons
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Test a store-wide discount before you launch it. Find WooCommerce products, sales and percentage coupons that could sell below cost or your margin.
+Check WooCommerce profit margins against your cost of goods. Find products, sales and coupons that sell below cost, and test a discount before launch.
 
 == Description ==
 
@@ -92,6 +92,10 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 
 == Changelog ==
 
+= 1.0.6 =
+* New plugin name that says what it does: CostGator: Profit Margin and Below Cost Checker for WooCommerce. Nothing else changes, your settings and last scan stay.
+* Tested with WooCommerce 11.3.
+
 = 1.0.5 =
 * Fixed: costs stored with a decimal comma, such as 12,50, are now read. The WPFactory Cost of Goods plugin can store costs this way, and these products were listed as missing cost.
 
@@ -126,6 +130,9 @@ Ask questions and report problems in the [support forum](https://wordpress.org/s
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.6 =
+New plugin name and WooCommerce 11.3 compatibility. No functional changes.
 
 = 1.0.5 =
 Reads costs stored with a decimal comma, as the WPFactory Cost of Goods plugin can save them.
